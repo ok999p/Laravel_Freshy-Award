@@ -12,12 +12,29 @@
     @vite('resources/css/app.css')
     <style>
         body {
+            position: relative; /* กำหนดให้ body มีตำแหน่งแบบ relative */
             font-family: "Estonia", cursive;
             font-weight: 400;
-            font-style: normal;        }
+            font-style: normal;
+        }
+
+        body::before {
+            content: ''; /* ใช้เพื่อสร้าง pseudo-element */
+            position: absolute; /* ทำให้มันอยู่เหนือ body */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("{{ asset('/bg_ticket.jpg') }}"); /* ใช้พื้นหลัง */
+            background-repeat: no-repeat;
+            background-size: cover;
+            opacity: 0.9; /* ความโปร่งใส 50% */
+            z-index: -1; /* ให้แน่ใจว่าพื้นหลังอยู่ด้านหลังเนื้อหา */
+        }
+
     </style>
 </head>
-<body class="bg-black flex justify-center items-center h-screen ">
+<body class="flex justify-center items-center h-screen">
 <div class="flex flex-col w-full ml-3">
     <div class="flex"> <!-- ใช้ flexbox เพื่อจัดการตาราง -->
         <table>
@@ -30,12 +47,22 @@
         <p class="text-amber-50">ทางเดิน</p>
     </div> <!-- เปลี่ยนความสูงตามต้องการ -->
 </div>
-<div class="w-full flex flex-col items-center">
-    <img src="{{asset('/logo.png')}}" style="width: 100px" class="mb-4"> <!-- ใช้ mb-4 เพื่อเพิ่มระยะห่างด้านล่าง -->
-    <div class="bg-white w-1/2 h-1/4 flex flex-col justify-center">
-        <p class="text-center text-3xl ">WU FRESHY AWARD BOOKING </p>
-        <p id="selected-seat" class="text-center text-2xl text-red-500"></p>
+<div class="w-full flex flex-col items-center p-4">
+    <img src="{{asset('/logo.png')}}" style="width: 100px" class="mb-4">
+    <div class="bg-white w-96 p-6 rounded-lg border-4 border-yellow-400 flex flex-col items-center">
+        <p class="text-3xl text-yellow-500 font-semibold mb-4">BOOKING</p>
+        <div class="flex justify-between w-full text-xl font-semibold mb-4">
+            <div class="text-center">
+                <p>ที่นั่ง :</p>
+                <p id="selected-seat" class="text-3xl text-black"></p>
+            </div>
+            <div class="text-center">
+                <p>โซนที่ :</p>
+                <p class="text-3xl text-black">5</p>
+            </div>
+        </div>
     </div>
+    <button class="bg-yellow-500 text-black text-xl font-semibold py-2 px-8 mt-6 rounded-full">จองเลย</button>
 </div>
 
 <script>
@@ -65,6 +92,7 @@
         const labelTdStart = document.createElement('td');
         labelTdStart.innerText = rowLabel; // ตัวอักษรแถว
         labelTdStart.style.width = seatWidth; // กำหนดความกว้าง
+        labelTdStart.style.fontSize = '24px';
         labelTdStart.style.color = 'white'; // เปลี่ยนสีตัวอักษรเป็นสีขาว
         labelTdStart.style.textAlign = 'center'; // จัดกึ่งกลาง
         row.appendChild(labelTdStart);
@@ -107,6 +135,7 @@
         labelTdEnd.innerText = rowLabel; // ตัวอักษรแถว
         labelTdEnd.style.width = seatWidth; // กำหนดความกว้าง
         labelTdEnd.style.color = 'white'; // เปลี่ยนสีตัวอักษรเป็นสีขาว
+        labelTdEnd.style.fontSize = '24px';
         labelTdEnd.style.textAlign = 'center'; // จัดกึ่งกลาง
         row.appendChild(labelTdEnd);
 
@@ -128,7 +157,7 @@
 
         if (checkmark.classList.contains('hidden')) {
             checkmark.classList.remove('hidden'); // แสดง checkmark
-            document.getElementById('selected-seat').innerText = "กดที่นั่ง ID: " + seatId; // แสดง ID
+            document.getElementById('selected-seat').innerText = seatId; // แสดง ID
         } else {
             checkmark.classList.add('hidden'); // ซ่อน checkmark
             document.getElementById('selected-seat').innerText = ""; // ลบ ID เมื่อติ๊กออก
