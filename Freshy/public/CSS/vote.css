@@ -53,7 +53,7 @@ body {
 .glow {
     font-family: 'Kanit', sans-serif;
     font-size: 3rem;
-    color: #d98ad9;
+    color: #b804ff;
     animation-name: glow;
     animation-duration: 2s;
     animation-iteration-count: infinite;
@@ -65,11 +65,11 @@ body {
 
 @keyframes glow {
     from {
-        text-shadow: 0px 0px 5px #87008d;
+        text-shadow: 0px 0px 5px #55008d;
     }
 
     to {
-        text-shadow: 0px 0px 50px #87008d;
+        text-shadow: 0px 0px 50px #55008d;
     }
 }
 
